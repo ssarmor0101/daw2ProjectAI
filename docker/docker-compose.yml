@@ -1,0 +1,10 @@
+services:
+  fastapi:
+    build: .
+    ports:
+      - "${FASTAPI_PORT}:8000"
+    volumes:
+      - ../app:/home/ttsuser
+    user: "${UID}:${GID}"
+    environment:
+      - COMPOSER_ALLOW_SUPERUSER=${COMPOSER_ALLOW_SUPERUSER}

@@ -46,6 +46,10 @@
   uvicorn fichero:variable --reload
   ```
 
+## Docker
+
+- docker compose --env-file .env.docker up -d
+
 ## Modelos
 
 - facebook/mms-tts-spa
