@@ -3,13 +3,53 @@
 > Trabajo realizado por: Nicolas Navarrete Rios, Antonio Gabriel Portillo Campos, Sergio Sarmiento Moreno \
   DAW 2º 25-26
 
-## Prompts (Eliminar)
+> Python 3.9.25
 
-Quiero hacer una pagina web con FastAPI con IA para generar un audio en funcion de un texto. ¿Que ficheros necesitare al menos? ¿Como deberia organizarlo? ¿Que modelos de hugging face me recomiendas que sean ligeros?
+## Activar el entorno
+
+- Ejecutar el modulo venv
+  ``` cmd
+  python3 -m venv venv
+  ```
+
+- Entrar en el entorno
+  ``` cmd
+  source venv/bin/active
+  ```
+
+- Para salir del entorno
+  ``` cmd
+  deactivate
+  ```
+
+## Instalar recursos necesarios
+
+- Instalar paquetes
+  ``` cmd
+  pip install fastapi
+  ```
+
+- Actualizar fichero requirements.txt
+  ``` cmd
+  pip freeze > requirements.txt
+  ```
+
+- Instalar paquetes desde un fichero
+  ``` cmd
+  pip install -r requirements.txt
+  ```
+
+## FastAPI
+
+- Ejecutar la aplicacion con FastAPI
+  ``` cmd
+  uvicorn fichero:variable --reload
+  ```
 
 ## Modelos
 
 - facebook/mms-tts-spa
+- coqui/XTTS-v2
 
 ## Arquitectura
 
@@ -42,3 +82,7 @@ project/
 ├── requirements.txt
 └── .env
 ```
+
+## Bibliografia
+
+- [coqui/XTTS-v2 Installation](https://docs.coqui.ai/en/latest/)
