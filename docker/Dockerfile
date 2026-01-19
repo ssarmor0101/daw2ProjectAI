@@ -1,31 +1,37 @@
 # Usamos Python 3.9.25 slim
 FROM python:3.9.25-slim
 
-# Evitamos prompts interactivos
 ENV DEBIAN_FRONTEND=noninteractive
+ENV PYTHONDONTWRITEBYTECODE=1
+ENV PYTHONUNBUFFERED=1
 
-# Creamos la variable de entorno para el usuario
-ENV DOCKER_USER_ID=${UID}
+# Dependencias del sistema (solo build-time)
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    build-essential \
+    git \
+    curl \
+    python3-dev \
+    libpython3.9-dev \
+ && rm -rf /var/lib/apt/lists/*
 
-# Instalamos herramientas básicas y dependencias
-RUN apt-get update && apt-get install -y --no-install-recommends build-essential git curl sudo python3-dev libpython3.9-dev && rm -rf /var/lib/apt/lists/*
+# Directorios de trabajo
+RUN mkdir -p /opt/app /opt/models \
+ && chown -R ${UID}:${GID} /opt/app /opt/models
 
-# Creamos un usuario con la misma ID que el host
-# RUN useradd -m -u $DOCKER_USER_ID ttsuser && echo "ttsuser ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
+# Usar UID/GID externos (aunque no existan en el contenedor)
+USER ${UID}:${GID}
 
-# Cambiamos al usuario creado
-USER $DOCKER_USER_ID
+WORKDIR /opt/app
 
-# Actualizamos pip y herramientas de Python
-RUN pip install --upgrade pip setuptools wheel
+# pip en modo usuario
+ENV PATH="/home/.local/bin:${PATH}"
 
-# Instalamos PyTorch CPU y TTS ligero
-RUN pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cpu
-RUN pip install TTS --no-cache-dir --no-deps
-RUN pip install torch torchaudio numpy scipy
+# Actualizar pip
+RUN pip install --user --upgrade pip setuptools wheel
 
-# Copiamos un script opcional de prueba (si existe)
-# COPY --chown=ttsuser:ttsuser ./tts_example.py ./tts_example.py
+# PyTorch CPU
+RUN pip install --user torch torchvision torchaudio \
+    --index-url https://download.pytorch.org/whl/cpu
 
-# Comando por defecto
-# CMD ["python", "tts_example.py"]
+# TTS y deps
+RUN pip install --user TTS numpy scipy

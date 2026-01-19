@@ -1,10 +1,20 @@
+version: "3.9"
+
 services:
   fastapi:
     build: .
+    # build:
+    #   context: .
+    #   args:
+    #     UID: ${UID}
+    #     GID: ${GID}
+    env_file:
+      - .env.docker
+    user: "${UID}:${GID}"
+    volumes:
+      - ../app:/opt/app
+      # - ./models:/opt/models
     ports:
       - "${FASTAPI_PORT}:8000"
-    volumes:
-      - ../app:/home/ttsuser
-    user: "${UID}:${GID}"
     environment:
       - COMPOSER_ALLOW_SUPERUSER=${COMPOSER_ALLOW_SUPERUSER}
