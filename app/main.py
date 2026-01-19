@@ -1,11 +1,42 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
+from pydantic import BaseModel
+from TTS.api import TTS
+import os
+import uuid
 
-# 1. Crear la instancia de la aplicación
-app = FastAPI()
+MODEL_NAME = "tts_models/multilingual/multi-dataset/xtts_v2"
+MODELS_PATH = "/opt/models"
+OUTPUT_PATH = "/opt/app/output"
 
-# 2. Usar un decorador para definir una ruta (endpoint)
-@app.get("/") # Decorador para el método GET en la ruta "/"
-async def read_root():
-    # 3. La lógica de la función
-    # FastAPI convertirá este diccionario en JSON
-    return {"message": "¡Bienvenido a mi primera API con FastAPI!"}
+os.makedirs(OUTPUT_PATH, exist_ok=True)
+
+app = FastAPI(title="XTTS v2 API")
+
+# Cargar modelo UNA vez al arrancar
+tts = TTS(
+    model_name=MODEL_NAME,
+    gpu=False,
+    progress_bar=False,
+    cache_path=MODELS_PATH,
+)
+
+class TTSRequest(BaseModel):
+    text: str
+    language: str = "es"
+    speaker_wav: str  # path a wav dentro del contenedor
+
+@app.post("/tts")
+def synthesize(req: TTSRequest):
+    if not os.path.exists(req.speaker_wav):
+        raise HTTPException(status_code=400, detail="speaker_wav no existe")
+
+    output_file = f"{OUTPUT_PATH}/{uuid.uuid4()}.wav"
+
+    tts.tts_to_file(
+        text=req.text,
+        speaker_wav=req.speaker_wav,
+        language=req.language,
+        file_path=output_file,
+    )
+
+    return {"output_wav": output_file}

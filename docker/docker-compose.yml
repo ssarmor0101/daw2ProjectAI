@@ -1,10 +1,16 @@
 services:
-  fastapi:
-    build: .
+  xtts-api:
+    build:
+      context: .
+      args:
+        UID: ${UID}
+        GID: ${GID}
+    env_file:
+      - .env
+    user: "${UID}:${GID}"
+    volumes:
+      - ../app:/opt/app
+      # - ./models:/opt/models
+      # - ./voices:/opt/voices   # aquí pones wavs de referencia
     ports:
       - "${FASTAPI_PORT}:8000"
-    volumes:
-      - ../app:/home/ttsuser
-    user: "${UID}:${GID}"
-    environment:
-      - COMPOSER_ALLOW_SUPERUSER=${COMPOSER_ALLOW_SUPERUSER}

@@ -48,6 +48,7 @@
 
 ## Docker
 
+- docker compose --env-file .env.docker build
 - docker compose --env-file .env.docker up -d
 
 ## Modelos
