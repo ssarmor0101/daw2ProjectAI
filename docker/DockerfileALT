@@ -1,0 +1,56 @@
+FROM python:3.9.25-slim
+
+# =====================
+# Args para permisos
+# =====================
+ARG UID=1001
+ARG GID=1001
+ARG USERNAME=appuser
+
+# =====================
+# Variables de entorno
+# =====================
+ENV PYTHONUNBUFFERED=1 \
+    PIP_NO_CACHE_DIR=1 \
+    DEBIAN_FRONTEND=noninteractive
+
+# =====================
+# Dependencias del sistema
+# =====================
+RUN apt-get update && apt-get install -y \
+    git \
+    ffmpeg \
+    sox \
+    libgl1 \
+    libglib2.0-0 \
+    build-essential \
+    && rm -rf /var/lib/apt/lists/*
+
+# =====================
+# Crear usuario con UID/GID del host
+# =====================
+RUN groupadd -g ${GID} ${USERNAME} \
+    && useradd -m -u ${UID} -g ${GID} -s /bin/bash ${USERNAME}
+
+# =====================
+# Directorio de trabajo
+# =====================
+WORKDIR /workspace
+
+# =====================
+# Instalar dependencias Python
+# =====================
+RUN pip install --upgrade pip setuptools wheel \
+    && pip install \
+        torch==2.1.2+cpu \
+        torchaudio==2.1.2+cpu \
+        --index-url https://download.pytorch.org/whl/cpu \
+    && pip install TTS
+
+# =====================
+# Cambiar a usuario no-root
+# =====================
+USER ${UID}:${GID}
+
+EXPOSE 8000
+CMD ["bash"]
