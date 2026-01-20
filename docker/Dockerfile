@@ -7,31 +7,30 @@ ENV PYTHONUNBUFFERED=1
 ARG UID=1001
 ARG GID=1001
 
+# Dependencias del sistema
 RUN apt-get update && apt-get install -y --no-install-recommends \
     build-essential \
-    git \
-    curl \
     python3-dev \
  && rm -rf /var/lib/apt/lists/*
 
-# Directorios
-RUN mkdir -p /opt/app /opt/models \
+# Crear directorios
+RUN mkdir -p /opt/app /opt/models
+
+# Crear usuario
+RUN groupadd -g ${GID} appuser && useradd -r -u ${UID} -g appuser appuser \
  && chown -R ${UID}:${GID} /opt/app /opt/models
 
-USER ${UID}:${GID}
 WORKDIR /opt/app
 
-ENV PATH="/home/.local/bin:${PATH}"
+# Copiar requirements e instalar paquetes
+COPY requirements.txt /opt/app/
+RUN pip install --no-cache-dir -r /opt/app/requirements.txt
 
-# Copiar requirements primero (cache)
-COPY --chown=${UID}:${GID} requirements.txt .
+# Cambiar a usuario no root
+USER ${UID}:${GID}
 
-# INSTALA DIRECTAMENTE sin --user
-RUN pip install -r requirements.txt
+# NO COPIAMOS LA APP - se monta con volumen desde Compose
+# COPY app/ /opt/app
 
-# Copiar el resto de la app
-# COPY --chown=${UID}:${GID} app/ /opt/app
-
-# EXPOSE 8000
-
+# CMD por defecto (puedes descomentar cuando quieras usarlo)
 # CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]

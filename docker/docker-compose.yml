@@ -6,7 +6,7 @@ services:
         UID: ${UID}
         GID: ${GID}
     env_file:
-      - .env
+      - .env.docker
     user: "${UID}:${GID}"
     volumes:
       - ../app:/opt/app
