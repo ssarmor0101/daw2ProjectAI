@@ -4,9 +4,13 @@ const form = document.getElementById("traductor-form");
 const resultadoDiv = document.getElementById("resultado");
 const textoTraducido = document.getElementById("texto-traducido");
 const errorDiv = document.getElementById("error");
+const buttonSubmit = document.getElementById("button-submit");
 
 form.addEventListener("submit", async (e) => {
     e.preventDefault();
+
+    buttonSubmit.setAttribute("disabled", "");
+    buttonSubmit.classList.add("disabled");
 
     resultadoDiv.classList.add("oculto");
     errorDiv.classList.add("oculto");
@@ -41,4 +45,7 @@ form.addEventListener("submit", async (e) => {
         errorDiv.textContent = error.message;
         errorDiv.classList.remove("oculto");
     }
+
+    buttonSubmit.removeAttribute("disabled");
+    buttonSubmit.classList.remove("disabled");
 });

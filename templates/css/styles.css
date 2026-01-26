@@ -1,3 +1,7 @@
+* {
+    box-sizing: border-box;
+}
+
 body {
     font-family: Arial, sans-serif;
     background: #f4f6f8;
@@ -24,8 +28,7 @@ label {
     font-weight: bold;
 }
 
-textarea,
-input {
+.input {
     width: 100%;
     padding: 10px;
     margin-top: 5px;
@@ -48,10 +51,13 @@ button {
     font-size: 16px;
     border-radius: 4px;
     cursor: pointer;
-}
+    &:hover {
+        background: #0056b3;
+    }
 
-button:hover {
-    background: #0056b3;
+    &.disabled {
+        background: #7a7a7a;
+    }
 }
 
 .resultado {
