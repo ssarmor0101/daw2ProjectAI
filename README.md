@@ -91,3 +91,27 @@ project/
 ## Bibliografia
 
 - [coqui/XTTS-v2 Installation](https://docs.coqui.ai/en/latest/)
+
+from transformers import MarianMTModel, MarianTokenizer
+
+# Modelo de español → inglés
+modelo = "Helsinki-NLP/opus-mt-es-en"
+
+tokenizer = MarianTokenizer.from_pretrained(modelo)
+model = MarianMTModel.from_pretrained(modelo)
+
+def traducir(texto):
+    tokens = tokenizer(texto, return_tensors="pt", padding=True)
+    traduccion = model.generate(**tokens)
+    return tokenizer.decode(traduccion[0], skip_special_tokens=True)
+
+texto = "Hola, ¿cómo estás?"
+print(traducir(texto))
+
+👉 Puedes cambiar el modelo:
+
+opus-mt-en-es → inglés a español
+
+opus-mt-fr-es → francés a español
+
+opus-mt-es-fr → español a francés
