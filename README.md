@@ -92,9 +92,12 @@ project/
 
 - [coqui/XTTS-v2 Installation](https://docs.coqui.ai/en/latest/)
 
+pip install transformers sentencepiece torch
+
 from transformers import MarianMTModel, MarianTokenizer
 
 # Modelo de español → inglés
+
 modelo = "Helsinki-NLP/opus-mt-es-en"
 
 tokenizer = MarianTokenizer.from_pretrained(modelo)
