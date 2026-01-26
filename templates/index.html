@@ -1,13 +1,36 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FastAPI</title>
+    <title>IA Traductor</title>
+    <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
-    <h1>Hello World!</h1>
+
+    <div class="container">
+        <h1>IA Traductor</h1>
+
+        <form id="traductor-form">
+            <label for="texto">Texto a traducir</label>
+            <textarea id="texto" required></textarea>
+
+            <label for="origen">Idioma origen</label>
+            <input type="text" id="origen" placeholder="ej: es" required>
+
+            <label for="destino">Idioma destino</label>
+            <input type="text" id="destino" placeholder="ej: en" required>
+
+            <button type="submit">Traducir</button>
+        </form>
+
+        <div id="resultado" class="resultado oculto">
+            <h2>Traducción</h2>
+            <p id="texto-traducido"></p>
+        </div>
+
+        <div id="error" class="error oculto"></div>
+    </div>
+
+    <script src="js/scripts.js"></script>
 </body>
 </html>
-
-<script></script>
