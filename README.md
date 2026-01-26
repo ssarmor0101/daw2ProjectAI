@@ -27,7 +27,6 @@
 - Instalar paquetes
   ``` cmd
   pip install fastapi
-  pip install uvicorn
   ```
 
 - Actualizar fichero requirements.txt
@@ -97,25 +96,47 @@ pip install transformers sentencepiece torch
 
 from transformers import MarianMTModel, MarianTokenizer
 
-# Modelo de español → inglés
+## 🌍 Idiomas soportados
 
-modelo = "Helsinki-NLP/opus-mt-es-en"
-
-tokenizer = MarianTokenizer.from_pretrained(modelo)
-model = MarianMTModel.from_pretrained(modelo)
-
-def traducir(texto):
-    tokens = tokenizer(texto, return_tensors="pt", padding=True)
-    traduccion = model.generate(**tokens)
-    return tokenizer.decode(traduccion[0], skip_special_tokens=True)
-
-texto = "Hola, ¿cómo estás?"
-print(traducir(texto))
-
-👉 Puedes cambiar el modelo:
-
-opus-mt-en-es → inglés a español
-
-opus-mt-fr-es → francés a español
-
-opus-mt-es-fr → español a francés
+| Código | Idioma     |
+| ------ | ---------- |
+| af     | Afrikaans  |
+| ar     | Árabe      |
+| bg     | Búlgaro    |
+| bn     | Bengalí    |
+| ca     | Catalán    |
+| cs     | Checo      |
+| da     | Danés      |
+| de     | Alemán     |
+| el     | Griego     |
+| en     | Inglés     |
+| es     | Español    |
+| et     | Estonio    |
+| fi     | Finés      |
+| fr     | Francés    |
+| he     | Hebreo     |
+| hi     | Hindi      |
+| hr     | Croata     |
+| hu     | Húngaro    |
+| id     | Indonesio  |
+| it     | Italiano   |
+| ja     | Japonés    |
+| ko     | Coreano    |
+| lt     | Lituano    |
+| lv     | Letón      |
+| mk     | Macedonio  |
+| nl     | Neerlandés |
+| no     | Noruego    |
+| pl     | Polaco     |
+| pt     | Portugués  |
+| ro     | Rumano     |
+| ru     | Ruso       |
+| sk     | Eslovaco   |
+| sl     | Esloveno   |
+| sv     | Sueco      |
+| ta     | Tamil      |
+| th     | Tailandés  |
+| tr     | Turco      |
+| uk     | Ucraniano  |
+| vi     | Vietnamita |
+| zh     | Chino      |
