@@ -4,6 +4,9 @@ MODELOS = {
     ("es", "en"): "Helsinki-NLP/opus-mt-es-en",
     ("en", "es"): "Helsinki-NLP/opus-mt-en-es",
     ("es", "fr"): "Helsinki-NLP/opus-mt-es-fr",
+    ("es", "de"): "Helsinki-NLP/opus-mt-es-de",
+    ("es", "ru"): "Helsinki-NLP/opus-mt-es-ru",
+    # ("es", "ja"): "Helsinki-NLP/opus-mt-es-ja",
 }
 
 _cache = {}

@@ -27,6 +27,7 @@
 - Instalar paquetes
   ``` cmd
   pip install fastapi
+  pip install uvicorn
   ```
 
 - Actualizar fichero requirements.txt
