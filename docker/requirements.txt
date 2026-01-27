@@ -1,7 +1,0 @@
-fastapi
-uvicorn
-TTS
-torch
-torchaudio
-numpy
-scipy
