@@ -140,3 +140,10 @@ from transformers import MarianMTModel, MarianTokenizer
 | uk     | Ucraniano  |
 | vi     | Vietnamita |
 | zh     | Chino      |
+
+
+git clone https://github.com/pytorch/fairseq
+cd fairseq
+# Descargar un modelo preentrenado
+wget https://dl.fbaipublicfiles.com/fairseq/models/wmt19.en-de.joined-dict.transformer.tar.gz
+tar -xvzf wmt19.en-de.joined-dict.transformer.tar.gz
