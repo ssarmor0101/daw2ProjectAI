@@ -5,6 +5,7 @@ from ia.base import TranslatorIA
 MODELOS = {
     ("es", "en"): "Helsinki-NLP/opus-mt-es-en",
     ("en", "es"): "Helsinki-NLP/opus-mt-en-es",
+    ("la", "es"): "Helsinki-NLP/opus-mt-la-es",
 }
 
 class MarianTranslator(TranslatorIA):
