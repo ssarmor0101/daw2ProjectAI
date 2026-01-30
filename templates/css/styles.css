@@ -57,6 +57,7 @@ button {
 
     &.disabled {
         background: #7a7a7a;
+        cursor: none;
     }
 }
 

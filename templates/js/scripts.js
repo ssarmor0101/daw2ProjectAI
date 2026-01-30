@@ -42,7 +42,12 @@ form.addEventListener("submit", async (e) => {
         resultadoDiv.classList.remove("oculto");
 
     } catch (error) {
-        errorDiv.textContent = error.message;
+        console.error(error);
+        if (error instanceof TypeError) {
+            errorDiv.textContent = "No se pudo conectar con el servidor";
+        } else {
+            errorDiv.textContent = error.message;
+        }
         errorDiv.classList.remove("oculto");
     }
 
